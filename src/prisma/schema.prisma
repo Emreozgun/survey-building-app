@@ -1,0 +1,69 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTGRES_HOST")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        String   @id @unique @default(uuid())
+  user      Auth[]
+  email     String   @unique @db.VarChar(256)
+  firstName String   @db.VarChar(100)
+  lastName  String   @db.VarChar(100)
+  password  String   @db.VarChar(100)
+  role      Role     @default(USER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Form      Form[]
+  Answer    Answer[]
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model Auth {
+  id        String   @id @default(uuid())
+  user      User?    @relation(fields: [userId], references: [id])
+  userId    String
+  key       String   @db.VarChar(256)
+  expires   DateTime
+  ip        String?
+  type      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, key, type], name: "Auth_userId_key_type_unique")
+}
+
+model Form {
+  id        String     @id @default(uuid())
+  title     String
+  creator   User       @relation(fields: [creatorId], references: [id])
+  creatorId String
+  questions Question[]
+  answers   Answer[]
+}
+
+model Question {
+  id      String   @id @default(uuid())
+  content String
+  form    Form     @relation(fields: [formId], references: [id])
+  formId  String
+  Answer  Answer[]
+}
+
+model Answer {
+  id         String   @id @default(uuid())
+  content    String
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String
+  form       Form     @relation(fields: [formId], references: [id])
+  formId     String
+  question   Question @relation(fields: [questionId], references: [id])
+  questionId String
+}
