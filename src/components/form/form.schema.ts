@@ -10,6 +10,7 @@ export const CreateFormSchema: FastifySchema = {
   description: 'Create form api',
   tags: ['form'],
   body: CreateFormBody,
+  security: [{ bearerAuth: [] }],
   response: {
     201: {
       description: 'Successful create response',
@@ -22,5 +23,5 @@ export const CreateFormSchema: FastifySchema = {
     400: ERROR400,
     409: ERROR409,
     500: ERROR500
-  }
+  },
 };

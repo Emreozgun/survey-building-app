@@ -23,7 +23,7 @@ class IndexRoute implements Routes {
         }
       },
       handler: IndexController.index
-    });
+    } as RouteOptions);
     done();
   }
 }

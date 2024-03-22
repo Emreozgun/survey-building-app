@@ -51,7 +51,8 @@ model Form {
 
 model Question {
   id      String   @id @default(uuid())
-  content String
+  content String // short text or number
+  label   String
   form    Form     @relation(fields: [formId], references: [id])
   formId  String
   Answer  Answer[]

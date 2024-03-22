@@ -57,7 +57,7 @@ class AuthService {
       throw new Unauthorized('Incorrect login credentials');
     }
 
-    const  authTokens = await this.tokenService.generateAuthTokens({ userId: user.id  });
+    const  authTokens = await this.tokenService.generateAuthTokens(user?.id);
 
     return { authTokens, userId: user.id };
   }
@@ -68,12 +68,13 @@ class AuthService {
    * @returns {Promise<{ authTokens: AuthTokens, userId: number }>} An object containing authentication tokens and user ID upon successful registration.
    */
   public async RegisterUser(createData: CreateUser) {
-
+    console.log({createData});
     // TODO: Could be transaction
     const data = await this.userService.createUser(createData);
-    const  authTokens = await this.tokenService.generateAuthTokens({ userId: data.id  });
-
-    return { authTokens, userId: data.id };
+    console.log({data});
+    const  authTokens = await this.tokenService.generateAuthTokens(data?.id);
+    console.log({authTokens});
+    return { authTokens, userId: data?.id };
   }
 
 }

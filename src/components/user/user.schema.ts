@@ -12,6 +12,8 @@ export const CreateUserBody = Type.Object({
       pattern: 'password must minimum of 8 characters, 1 uppercase, lowercase, number and a special character'
     }
   }),
+  firstName: Type.String(),
+  lastName: Type.String(),
   role: Type.Enum(RoleEnum, { default: RoleEnum.USER, errorMessage: { enum: 'Invalid Role' } })
 });
 

@@ -35,24 +35,23 @@ class UserService {
         email: createData.email
       }
     });
-
     if (checkUserExists) {
       throw new Conflict('User already exists');
     }
 
     const hashedPassword = await hash(createData.password, this.saltRounds);
-
     const user = await this.db.user.create({
       data: {
         email: createData.email,
-        password: hashedPassword
+        password: hashedPassword,
+        firstName: createData.firstName,
+        lastName: createData.lastName,
       },
       select: {
         email: true,
         id: true,
       }
     });
-
     return user;
   }
 

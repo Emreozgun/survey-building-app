@@ -16,7 +16,7 @@ class UserRoute implements Routes {
       schema: GetUserSchema,
       preHandler: fastify.authenticateUser,
       handler: this.userController.getUser
-    });
+    } as RouteOptions);
     done();
   }
 }

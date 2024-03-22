@@ -29,9 +29,9 @@ class AuthController {
    * @returns {Object} An object containing access token, refresh token, user ID, and a message indicating registration success.
    */
   public register = async (req: FastifyRequest<{ Body: CreateUser }>) => {
-    const { email, password, role } = req.body;
+    console.log('register');
 
-    const data = await this.authService.RegisterUser({ email, password, role });
+    const data = await this.authService.RegisterUser(req.body);
 
     return { access: data.authTokens.access, refresh: data.authTokens.refresh, userId: data.userId, message: 'register' };
   };

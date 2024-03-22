@@ -20,9 +20,7 @@ class UserController {
    * @returns {Promise<{ data: User, message: string }>} An object containing user data and a message indicating success.
    */
   public createUser = async (req: FastifyRequest<{ Body: CreateUser }>) => {
-    const { email, password, role } = req.body;
-
-    const data = await this.userService.createUser({ email, password, role });
+    const data = await this.userService.createUser(req.body);
 
     return { data, message: 'user created' };
   };
