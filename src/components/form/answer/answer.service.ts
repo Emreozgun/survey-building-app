@@ -4,26 +4,6 @@ import {Answer} from "@prisma/client";
 
 class AnswerService {
     public db = prisma;
-
-    public async getAnswersByForm(formId: string) {
-        const answers = await this.db.answer.findMany({
-            where: {
-                formId: formId
-            }
-        });
-        return answers;
-    }
-
-    public async getAnswersByUserId(formId: string, userId: string) {
-        const answers = await this.db.answer.findMany({
-            where: {
-                userId: userId,
-                formId: formId,
-            }
-        });
-        return answers;
-    }
-
     public async insertMany(userId: string, formId: string, answersData: AnswerForm[]) {
         const userSubmittedAnswers = await this.db.answer.findMany({
             where: {

@@ -76,8 +76,8 @@ class FormService {
 
       const questionIds= answers.map((answer) => answer.questionId);
 
-      const formQuestionIds= await this.questionService.getQuestionsByFormId(formId);
-
+      const questions= await this.questionService.getQuestionsByFormId(formId);
+      const formQuestionIds = questions.map((question) => question.id);
       const missingQuestionIds = formQuestionIds.filter(questionId => !questionIds.includes(questionId));
 
       if (missingQuestionIds.length > 0) {
@@ -89,6 +89,24 @@ class FormService {
       console.log({e});
     }
 
+  }
+
+  public async getFormQuestions(formId: string) {
+    return this.questionService.getQuestionsByFormId(formId);
+  }
+
+  public async getSubmissionsWithQuestions(formId: string) {
+
+    const formWithQuestionsAndSubmissions = await prisma.form.findUnique({
+      where: {
+        id: formId,
+      },
+      include: {
+        questions: true,
+        answers: true,
+      },
+    });
+    return formWithQuestionsAndSubmissions;
   }
 
 }

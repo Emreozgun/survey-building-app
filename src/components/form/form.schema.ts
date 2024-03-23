@@ -37,7 +37,7 @@ export const DeleteFormSchema: FastifySchema = {
   params: {
     type: 'object',
     properties: {
-      formId: { type: 'string', description: 'ID of the form to be deleted' }
+      formId: { type: 'string', description: 'ID of the form' }
     },
     required: ['formId']
   },
@@ -63,7 +63,7 @@ export const SubmitFormSchema: FastifySchema = {
   params: {
     type: 'object',
     properties: {
-      formId: { type: 'string', description: 'ID of the form to be deleted' }
+      formId: { type: 'string', description: 'ID of the form' }
     },
     required: ['formId']
   },
@@ -79,6 +79,98 @@ export const SubmitFormSchema: FastifySchema = {
       properties: {
         ...responseProperty,
         data: { type: 'object', properties: { } }
+      }
+    },
+    400: ERROR400,
+    409: ERROR409,
+    500: ERROR500
+  },
+};
+
+
+
+export const FormQuestionsSchema: FastifySchema = {
+  description: 'Form questions API',
+  tags: ['form'],
+  params: {
+    type: 'object',
+    properties: {
+      formId: { type: 'string', description: 'ID of the form' }
+    },
+    required: ['formId']
+  },
+  security: [{ bearerAuth: [] }],
+  response: {
+    200: {
+      description: 'Successful form questions response',
+      type: 'object',
+      properties: {
+        ...responseProperty,
+        data: {
+          type: 'array',
+          items: {
+            type: 'object',
+            properties: {
+              id: { type: 'string' },
+              content: { type: 'string' },
+              label: { type: 'string' },
+              formId: { type: 'string' }
+            }
+          }
+        }
+      }
+    },
+    400: ERROR400,
+    409: ERROR409,
+    500: ERROR500
+  },
+};
+
+
+export const SubmissionsSchema: FastifySchema = {
+  description: 'Form submissions API',
+  tags: ['form'],
+  params: {
+    type: 'object',
+    properties: {
+      formId: { type: 'string', description: 'ID of the form' }
+    },
+    required: ['formId']
+  },
+  security: [{ bearerAuth: [] }],
+  response: {
+    200: {
+      description: 'Successful form questions response',
+      type: 'object',
+      properties: {
+        ...responseProperty,
+        data: {
+          questions: {
+            type: 'array',
+            items: {
+              type: 'object',
+              properties: {
+                id: { type: 'string' },
+                content: { type: 'string' },
+                label: { type: 'string' },
+                formId: { type: 'string' }
+              }
+            }
+          },
+          submissions: {
+            type: 'array',
+            items: {
+              type: 'object',
+              properties: {
+                id: { type: 'string' },
+                userId: { type: 'string' },
+                formId: { type: 'string' },
+                questionId: { type: 'string' },
+                content: { type: 'string' }
+              }
+            }
+          }
+        }
       }
     },
     400: ERROR400,

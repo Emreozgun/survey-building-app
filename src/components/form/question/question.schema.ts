@@ -7,8 +7,6 @@ export const CreateQuestionBody = Type.Object({
   label: Type.Optional(Type.String()),
 });
 
-
-
 export const InsertQuestionSchema: FastifySchema = {
   description: 'Insert question API',
   tags: ['form'],

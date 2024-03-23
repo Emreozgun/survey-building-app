@@ -29,12 +29,9 @@ class QuestionService {
         const questions = await this.db.question.findMany({
             where: {
                 formId: formId
-            },
-            select: {
-                id: true
             }
         });
-        return questions.map((question) => question.id);
+        return questions;
     }
 
     public async delete(questionId: string) {

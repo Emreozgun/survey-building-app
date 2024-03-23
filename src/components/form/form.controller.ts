@@ -48,17 +48,20 @@ class FormController {
   };
 
 
-  public getAnswersByFormQuestions = async (req: FastifyRequest<{ Params: { formId: string } }>) => {
-    const {userId} = req.user;
+  public getFormQuestions = async (req: FastifyRequest<{ Params: { formId: string } }>) => {
     const {formId} = req.params;
 
-    return {message: 'Question and answers'};
+    const data = await this.formService.getFormQuestions(formId);
+
+    return {data, message: 'Form Questions'};
   };
 
-  public findAllSubmittedAnswers = async (req: FastifyRequest<{ Params: { formId: string } }>) => {
+  public findAllSubmissions = async (req: FastifyRequest<{ Params: { formId: string } }>) => {
     const {formId} = req.params;
+
+    const submissions = await this.formService.getSubmissionsWithQuestions(formId);
     // fetch questions and all submitted answers
-    return {message: 'Question and answers'};
+    return {data: submissions, message: 'Question and submissions'};
   };
 
 }

@@ -1,7 +1,13 @@
 import { Routes } from '@interfaces/routes.interface';
 import { FastifyInstance, RouteOptions } from 'fastify';
 import FormController from "@components/form/form.controller";
-import {CreateFormSchema, DeleteFormSchema, SubmitFormSchema} from "@components/form/form.schema";
+import {
+  CreateFormSchema,
+  DeleteFormSchema,
+  FormQuestionsSchema,
+  SubmissionsSchema,
+  SubmitFormSchema
+} from "@components/form/form.schema";
 import {DeleteQuestionSchema, InsertQuestionSchema} from "@components/form/question/question.schema";
 
 
@@ -63,29 +69,23 @@ class FormRoute implements Routes {
       handler: this.formController.submitForm
     } as RouteOptions);
 
-    // fastify.route({
-    //   method: 'get',
-    //   url: `${this.path}/:formId`,
-    //   schema: SubmitFormSchema,
-    //   config: {roles: ['admin', 'user']},
-    //   preHandler: fastify.authenticateUser,
-    //   handler: this.formController.getAnswersByFormQuestions
-    // } as RouteOptions);
-    //
-    // fastify.route({
-    //   method: 'get',
-    //   url: `${this.path}/:formId`,
-    //   schema: SubmitFormSchema,
-    //   config: {roles: ['admin', 'user']},
-    //   preHandler: fastify.authenticateUser,
-    //   handler: this.formController.findAllSubmittedAnswers
-    // } as RouteOptions);
+    fastify.route({
+      method: 'get',
+      url: `${this.path}/:formId/question`,
+      schema: FormQuestionsSchema,
+      config: {roles: ['admin', 'user']},
+      preHandler: fastify.authenticateUser,
+      handler: this.formController.getFormQuestions
+    } as RouteOptions);
 
-
-
-    // get form by id with all questions and submissions for admin
-    // Could be merged below and above desc.
-    // get form by id with only questions for user
+    fastify.route({
+      method: 'get',
+      url: `${this.path}/:formId/questions/submissions`,
+      schema: SubmissionsSchema,
+      config: {roles: ['admin']},
+      preHandler: fastify.authenticateUser,
+      handler: this.formController.findAllSubmissions
+    } as RouteOptions);
 
     done();
   }
