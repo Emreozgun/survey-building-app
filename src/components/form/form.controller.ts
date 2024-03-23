@@ -7,6 +7,7 @@ import {AnswerForm} from "@components/form/answer/answer.interface";
 class FormController {
   public formService = new FormService();
 
+  // TODO: add catchAsync or error hook
   public createForm = async (req: FastifyRequest<{ Body: CreateForm }>) => {
     const {userId} = req.user;
     // console.log(req.body, req.user)
@@ -27,7 +28,7 @@ class FormController {
 
     const data = await this.formService.insertQuestion(formId, req.body);
 
-    return { data, message: 'Question added to form!' };
+    return { questionId: data, message: 'Question added to form!' };
   };
 
   public deleteQuestion = async (req: FastifyRequest<{ Params: { questionId: string } }>) => {

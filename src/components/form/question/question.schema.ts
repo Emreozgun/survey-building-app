@@ -14,6 +14,13 @@ export const InsertQuestionSchema: FastifySchema = {
   tags: ['form'],
   body: CreateQuestionBody,
   security: [{ bearerAuth: [] }],
+  params: {
+    type: 'object',
+    properties: {
+      formId: { type: 'string', description: 'ID of the form to be deleted' }
+    },
+    required: ['formId']
+  },
   response: {
     201: {
       description: 'Successful insert response',

@@ -2,6 +2,7 @@ import {Type} from '@fastify/type-provider-typebox';
 import {FastifySchema} from 'fastify';
 import {ERROR400, ERROR404, ERROR409, ERROR500, responseProperty} from '@constants/constants';
 import {CreateQuestionBody} from "@components/form/question/question.schema";
+import {CreateAnswerBody} from "@components/form/answer/answer.schema";
 
 export const CreateFormBody = Type.Object({
   title: Type.String(),
@@ -55,8 +56,35 @@ export const DeleteFormSchema: FastifySchema = {
   },
 };
 
+
 export const SubmitFormSchema: FastifySchema = {
-  description: 'Submit form API',
+  description: 'Submit form answers API',
   tags: ['form'],
+  params: {
+    type: 'object',
+    properties: {
+      formId: { type: 'string', description: 'ID of the form to be deleted' }
+    },
+    required: ['formId']
+  },
+  body: {
+    type: 'array',
+    items: CreateAnswerBody,
+  },
+  security: [{ bearerAuth: [] }],
+  response: {
+    201: {
+      description: 'Successful submission response',
+      type: 'object',
+      properties: {
+        ...responseProperty,
+        data: { type: 'object', properties: { } }
+      }
+    },
+    400: ERROR400,
+    409: ERROR409,
+    500: ERROR500
+  },
 };
+
 

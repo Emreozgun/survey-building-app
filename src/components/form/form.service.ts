@@ -20,7 +20,7 @@ class FormService {
         data: {
           title: createForm.title,
           description: createForm.description,
-          creator: { connect: { id: creatorId } }
+          creatorId: creatorId,
           // TODO: Above defination could not be true. Check it
           // creatorId: creatorId,
         },
@@ -43,27 +43,23 @@ class FormService {
 
   public async deleteForm(formId: string) {
     try {
-      const [form, questions] = await this.db.$transaction([
-        this.db.form.delete({
-          where: { id: formId },
-        }),
+      const [questions, form ] = await this.db.$transaction([
         this.db.question.deleteMany({
           where: { formId },
+        }),
+        this.db.form.delete({
+          where: { id: formId },
         }),
       ]);
     } catch (e) {
       console.log({e});
+      throw Error(e as string);
     }
 
   }
 
   public async insertQuestion(formId: string, questionForm: QuestionForm) {
-    try {
-        await this.questionService.create(formId, questionForm)
-    } catch (e) {
-      console.log({e});
-    }
-
+      return await this.questionService.create(formId, questionForm);
   }
 
   public async deleteQuestion(questionId: string) {
@@ -77,14 +73,23 @@ class FormService {
 
   public async submitForm(userId: string, formId: string, answers: AnswerForm[]) {
     try {
+
+      const questionIds= answers.map((answer) => answer.questionId);
+
+      const formQuestionIds= await this.questionService.getQuestionsByFormId(formId);
+
+      const missingQuestionIds = formQuestionIds.filter(questionId => !questionIds.includes(questionId));
+
+      if (missingQuestionIds.length > 0) {
+        throw new Error('User did not answer all questions in the form');
+      }
+
       await this.answerService.insertMany(userId, formId, answers);
     } catch (e) {
       console.log({e});
     }
 
   }
-
-
 
 }
 

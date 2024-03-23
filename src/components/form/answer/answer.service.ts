@@ -25,6 +25,16 @@ class AnswerService {
     }
 
     public async insertMany(userId: string, formId: string, answersData: AnswerForm[]) {
+        const userSubmittedAnswers = await this.db.answer.findMany({
+            where: {
+                userId: userId,
+                formId: formId
+            }
+        });
+
+        if (userSubmittedAnswers.length > 0) {
+            throw new Error('User already submitted answers for this form');
+        }
 
         const dbAnswers= answersData.map(answer => ({
             ...answer,

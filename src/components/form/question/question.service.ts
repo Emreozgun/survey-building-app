@@ -7,18 +7,36 @@ class QuestionService {
 
     public async create(formId: string, questionForm: QuestionForm) {
         try {
-            const createdQuestion = await this.db.question.create({
+            const question: {id: string} = await this.db.question.create({
                 data: {
                     content: questionForm.content,
                     label: questionForm.label || '',
-                    form: { connect: { id: formId } }
+                    formId: formId,
+                },
+                select: {
+                    id: true
                 }
             });
-            return createdQuestion;
+            return question.id;
         } catch (error) {
+            console.log({error})
             throw new Error('Question creation failed.');
         }
     }
+
+    public async getQuestionsByFormId(formId: string) {
+
+        const questions = await this.db.question.findMany({
+            where: {
+                formId: formId
+            },
+            select: {
+                id: true
+            }
+        });
+        return questions.map((question) => question.id);
+    }
+
     public async delete(questionId: string) {
         try {
             const deletedQuestion = await this.db.question.delete({

@@ -63,23 +63,23 @@ class FormRoute implements Routes {
       handler: this.formController.submitForm
     } as RouteOptions);
 
-    fastify.route({
-      method: 'get',
-      url: `${this.path}/:formId`,
-      schema: SubmitFormSchema,
-      config: {roles: ['admin', 'user']},
-      preHandler: fastify.authenticateUser,
-      handler: this.formController.getAnswersByFormQuestions
-    } as RouteOptions);
-
-    fastify.route({
-      method: 'get',
-      url: `${this.path}/:formId`,
-      schema: SubmitFormSchema,
-      config: {roles: ['admin', 'user']},
-      preHandler: fastify.authenticateUser,
-      handler: this.formController.findAllSubmittedAnswers
-    } as RouteOptions);
+    // fastify.route({
+    //   method: 'get',
+    //   url: `${this.path}/:formId`,
+    //   schema: SubmitFormSchema,
+    //   config: {roles: ['admin', 'user']},
+    //   preHandler: fastify.authenticateUser,
+    //   handler: this.formController.getAnswersByFormQuestions
+    // } as RouteOptions);
+    //
+    // fastify.route({
+    //   method: 'get',
+    //   url: `${this.path}/:formId`,
+    //   schema: SubmitFormSchema,
+    //   config: {roles: ['admin', 'user']},
+    //   preHandler: fastify.authenticateUser,
+    //   handler: this.formController.findAllSubmittedAnswers
+    // } as RouteOptions);
 
 
 
