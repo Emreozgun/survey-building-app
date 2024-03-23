@@ -4,6 +4,7 @@ import AnswerService from "@components/form/answer/answer.service";
 import QuestionService from "@components/form/question/question.service";
 import {Question} from "@prisma/client";
 import {QuestionForm} from "@components/form/question/question.interface";
+import {AnswerForm} from "@components/form/answer/answer.interface";
 
 class FormService {
   public db = prisma;
@@ -73,6 +74,17 @@ class FormService {
     }
 
   }
+
+  public async submitForm(userId: string, formId: string, answers: AnswerForm[]) {
+    try {
+      await this.answerService.insertMany(userId, formId, answers);
+    } catch (e) {
+      console.log({e});
+    }
+
+  }
+
+
 
 }
 
