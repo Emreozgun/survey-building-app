@@ -36,7 +36,7 @@
     "@fastify/swagger": "8.8.0",
     "@fastify/swagger-ui": "1.9.3",
     "@fastify/type-provider-typebox": "3.4.0",
-    "@prisma/client": "5.1.1",
+    "@prisma/client": "^5.11.0",
     "@sinclair/typebox": "0.30.2",
     "@types/jsonwebtoken": "^9.0.6",
     "ajv-errors": "3.0.0",

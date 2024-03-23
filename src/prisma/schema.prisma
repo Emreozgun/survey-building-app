@@ -41,18 +41,20 @@ model Auth {
 }
 
 model Form {
-  id        String     @id @default(uuid())
-  title     String
-  creator   User       @relation(fields: [creatorId], references: [id])
-  creatorId String
-  questions Question[]
-  answers   Answer[]
+  id          String     @id @default(uuid())
+  title       String
+  description String
+  creator     User       @relation(fields: [creatorId], references: [id])
+  creatorId   String
+  questions   Question[]
+  answers     Answer[]
 }
 
+// TODO: could be added required field
 model Question {
   id      String   @id @default(uuid())
-  content String // short text or number
-  label   String
+  content String   // TODO: short text or number
+  label   String?
   form    Form     @relation(fields: [formId], references: [id])
   formId  String
   Answer  Answer[]

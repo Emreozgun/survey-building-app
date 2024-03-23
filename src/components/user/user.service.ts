@@ -1,10 +1,11 @@
-import { hash } from 'bcrypt';
+import {hash} from 'bcrypt';
 
-import { CreateUser, GetUser } from '@components/user/user.interface';
+import {CreateUser, GetUser} from '@components/user/user.interface';
 
 import prisma from '@utils/prisma';
 
-import { Conflict, NotFound } from '@exceptions/error';
+import {Conflict, NotFound} from '@exceptions/error';
+import {RoleEnum} from "@/config/roles";
 
 /**
  * Service class for handling user related operations.
@@ -40,10 +41,13 @@ class UserService {
     }
 
     const hashedPassword = await hash(createData.password, this.saltRounds);
+    console.log(createData.role)
     const user = await this.db.user.create({
       data: {
         email: createData.email,
         password: hashedPassword,
+        role: createData.role === 'admin' ? 'ADMIN' : 'USER',
+        // TODO: Refactor above code
         firstName: createData.firstName,
         lastName: createData.lastName,
       },

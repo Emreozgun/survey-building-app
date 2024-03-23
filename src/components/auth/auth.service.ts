@@ -9,6 +9,7 @@ import {FastifyReply} from 'fastify';
 import TokenService from "@components/token/token.service";
 import UserService from "@components/user/user.service";
 import {CreateUser} from "@components/user/user.interface";
+import {RoleEnum} from "@/config/roles";
 
 /**
  * Service class for handling authentication related operations.
@@ -57,7 +58,7 @@ class AuthService {
       throw new Unauthorized('Incorrect login credentials');
     }
 
-    const  authTokens = await this.tokenService.generateAuthTokens(user?.id);
+    const  authTokens = await this.tokenService.generateAuthTokens(user?.id, user.role === 'ADMIN' ? RoleEnum.ADMIN : RoleEnum.USER );
 
     return { authTokens, userId: user.id };
   }
@@ -68,12 +69,11 @@ class AuthService {
    * @returns {Promise<{ authTokens: AuthTokens, userId: number }>} An object containing authentication tokens and user ID upon successful registration.
    */
   public async RegisterUser(createData: CreateUser) {
-    console.log({createData});
+
     // TODO: Could be transaction
     const data = await this.userService.createUser(createData);
-    console.log({data});
-    const  authTokens = await this.tokenService.generateAuthTokens(data?.id);
-    console.log({authTokens});
+    const  authTokens = await this.tokenService.generateAuthTokens(data?.id, createData.role);
+
     return { authTokens, userId: data?.id };
   }
 

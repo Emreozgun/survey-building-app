@@ -19,7 +19,7 @@ export const CreateUserBody = Type.Object({
 
 export const CreateUserSchema: FastifySchema = {
   description: 'Create user api',
-  tags: ['user'],
+  tags: ['auth'],
   body: CreateUserBody,
   response: {
     201: {
