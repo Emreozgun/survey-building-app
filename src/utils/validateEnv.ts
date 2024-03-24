@@ -8,6 +8,6 @@ export const schema = Type.Object({
   PORT: Type.String(),
   CREDENTIALS: Type.String(),
   POSTGRES_HOST: Type.String(),
-  JWT_ACCESS_EXPIRATION_MINUTES: Type.Number(),
-  JWT_REFRESH_EXPIRATION_DAYS: Type.Number(),
+  JWT_ACCESS_EXPIRATION_MINUTES: Type.String(),
+  JWT_REFRESH_EXPIRATION_DAYS: Type.String(),
 });
