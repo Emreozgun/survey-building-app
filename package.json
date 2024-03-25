@@ -4,7 +4,8 @@
   "description": "Survey Building App",
   "main": "app.ts",
   "scripts": {
-    "start": "npm run build:prod && cross-env NODE_ENV=production node dist/server.js",
+    "start": "node dist/server.js",
+    "build": "tsc",
     "dev": "cross-env NODE_ENV=development nodemon",
     "build:prod": "cross-env NODE_ENV=production swc src -d dist --source-maps --copy-files",
     "build:dev": "cross-env NODE_ENV=development swc src -d dist --source-maps --copy-files",
