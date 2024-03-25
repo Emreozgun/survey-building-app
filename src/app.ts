@@ -64,7 +64,7 @@ class App {
 
   private initializePlugins() {
     this.app.register(fastifyEnv, { dotenv: true, schema });
-    this.app.register(fastifyCors, { origin: process.env.ORIGIN, credentials: process.env.CREDENTIALS === 'true' });
+    this.app.register(fastifyCors, { origin: '*', credentials: process.env.CREDENTIALS === 'true' });
     this.app.register(fastifyHelmet);
     this.app.register(fastifyCompress);
     this.app.register(fastifyJwt, { secret: process.env.JWT_SECRET ?? '' });
