@@ -22,6 +22,7 @@ class App {
   public env: string;
 
   public port: number;
+  public host: string;
 
   constructor() {
     this.app = Fastify({
@@ -38,13 +39,13 @@ class App {
 
     this.env = process.env.NODE_ENV ?? 'development';
     this.port = Number(process.env.PORT) ?? 3001;
-
+    this.host = process.env.HOST ?? '0.0.0.0';
     this.init();
   }
 
   public async listen() {
     try {
-      await this.app.listen({ port: this.port, host: '0.0.0.0' });
+      await this.app.listen({ port: this.port, host: this.host });
     } catch (err) {
       this.app.log.error(err);
       process.exit(1);

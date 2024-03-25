@@ -6,6 +6,7 @@ export const schema = Type.Object({
   ORIGIN: Type.String(),
   JWT_SECRET: Type.String(),
   PORT: Type.String(),
+  HOST: Type.String(),
   CREDENTIALS: Type.String(),
   POSTGRES_HOST: Type.String(),
   JWT_ACCESS_EXPIRATION_MINUTES: Type.String(),
