@@ -1,3 +1,9 @@
+## NOTES
+
+- First of all, I wanted to develop the case study with the tech stack your company uses. But I have no experience with these, I could make some mistakes.
+- I had a problem with Ava testing typescript compatibility, it took me a lot of time and I could not complete the testing part.
+- I had a problem with postgreSQL running on Heroku. The API works on the server, but operations cannot be performed. Everything works perfectly in my local. 
+
 ## How to use
 
 ### 1. Clone this repo & install dependencies
