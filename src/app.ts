@@ -44,7 +44,7 @@ class App {
 
   public async listen() {
     try {
-      await this.app.listen({ port: this.port });
+      await this.app.listen({ port: this.port, host: '0.0.0.0' });
     } catch (err) {
       this.app.log.error(err);
       process.exit(1);
