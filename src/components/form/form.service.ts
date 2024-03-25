@@ -32,7 +32,7 @@ class FormService {
       if(!form.id)
         throw Error('Form is not created successfully!');
 
-      await this.questionService.insertMany(createForm.questions as Question[], form.id);
+      await this.questionService.insertMany(createForm.questions as QuestionForm[], form.id);
 
       return form;
 

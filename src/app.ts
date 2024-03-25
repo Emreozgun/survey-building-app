@@ -14,7 +14,7 @@ import { initSwagger } from '@plugins/swagger';
 import { schemaErrorFormatter } from '@utils/schemaErrorFormatter';
 
 import { schema } from '@utils/validateEnv';
-import {envConfig} from "@/config/env";
+import * as process from "process";
 
 class App {
   public app: FastifyInstance;
@@ -36,8 +36,8 @@ class App {
       logger: true
     }).withTypeProvider<TypeBoxTypeProvider>();
 
-    this.env = envConfig.nodeEnv ?? 'development';
-    this.port = Number(envConfig.port) ?? 3001;
+    this.env = process.env.NODE_ENV ?? 'development';
+    this.port = Number(process.env.PORT) ?? 3001;
 
     this.init();
   }
@@ -63,16 +63,16 @@ class App {
 
   private initializePlugins() {
     this.app.register(fastifyEnv, { dotenv: true, schema });
-    this.app.register(fastifyCors, { origin: envConfig.origin, credentials: envConfig.credentials === 'true' });
+    this.app.register(fastifyCors, { origin: process.env.ORIGIN, credentials: process.env.CREDENTIALS === 'true' });
     this.app.register(fastifyHelmet);
     this.app.register(fastifyCompress);
-    this.app.register(fastifyJwt, { secret: envConfig.jwt.secret ?? '' });
+    this.app.register(fastifyJwt, { secret: process.env.JWT_SECRET ?? '' });
     this.app.register(authentication);
     this.app.register(initSwagger);
   }
 
   private initializeRoutes() {
-    this.app.register(initializeRoutes, { prefix: `api/${envConfig.apiVersion}` });
+    this.app.register(initializeRoutes, { prefix: `api/${process.env.API_VERSION}` });
   }
 
   private initializeErrorHandling() {

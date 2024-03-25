@@ -8,6 +8,7 @@ import {TokenData} from "@components/token/token.interface";
 export const authentication = fastifyPlugin((fastify: FastifyInstance, _: unknown, done: () => void) => {
   const authPreHandler = async (request: FastifyRequest) => {
     // TODO: resolve typescript error
+    // @ts-ignore
     const routeRoles = request.routeConfig?.roles;
 
     const authorization = request.headers.authorization || '';

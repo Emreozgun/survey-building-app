@@ -1,9 +1,9 @@
 import {TokenData} from "@components/token/token.interface";
 // import moment from 'moment'
 import jwt from 'jsonwebtoken';
-import {envConfig} from "@/config/env";
-import {tokenTypes} from "@/config/tokens";
-import {RoleEnum} from "@/config/roles";
+import {envConfig} from "../../config/env";
+import {tokenTypes} from "../../config/tokens";
+import {RoleEnum} from "../../config/roles";
 
 class TokenService {
     public generateToken(tokenData: TokenData): string {

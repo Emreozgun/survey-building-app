@@ -21,10 +21,9 @@
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "importHelpers": true,
-    "baseUrl": "src",
+    "baseUrl": "./src",
     "paths": {
       "@/*": ["*"],
-      "@config": ["config"],
       "@interfaces/*": ["interfaces/*"],
       "@utils/*": ["utils/*"],
       "@constants/*": ["constants/*"],
@@ -34,5 +33,5 @@
     }
   },
   "include": ["src/**/*.ts", "src/**/*.json", ".env", "src/**/*.feature", "src/**/*.d.ts"],
-  "exclude": ["node_modules", "src/http", "src/logs", "src/tests"]
+  "exclude": ["node_modules", "src/logs", "src/tests", "dist"]
 }

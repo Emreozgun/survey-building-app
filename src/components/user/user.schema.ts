@@ -1,7 +1,7 @@
 import {Type} from '@fastify/type-provider-typebox';
 import {FastifySchema} from 'fastify';
 import {ERROR400, ERROR401, ERROR404, ERROR409, ERROR500, responseProperty} from '@constants/constants';
-import {RoleEnum} from "@/config/roles";
+import {RoleEnum} from "../../config/roles";
 
 export const CreateUserBody = Type.Object({
   email: Type.String({ format: 'email', errorMessage: { format: 'Invalid Email' } }),

@@ -9,7 +9,7 @@ import {FastifyReply} from 'fastify';
 import TokenService from "@components/token/token.service";
 import UserService from "@components/user/user.service";
 import {CreateUser} from "@components/user/user.interface";
-import {RoleEnum} from "@/config/roles";
+import {RoleEnum} from "../../config/roles";
 
 /**
  * Service class for handling authentication related operations.

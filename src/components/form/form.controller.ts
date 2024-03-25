@@ -9,6 +9,7 @@ class FormController {
 
   // TODO: add catchAsync or error hook
   public createForm = async (req: FastifyRequest<{ Body: CreateForm }>) => {
+    // @ts-ignore
     const {userId} = req.user;
     // console.log(req.body, req.user)
     const data = await this.formService.createForm(req.body, userId);
@@ -39,6 +40,7 @@ class FormController {
   };
 
   public submitForm = async (req: FastifyRequest<{ Params: { formId: string },  Body: AnswerForm[]  }>) => {
+    // @ts-ignore
     const {userId} = req.user;
     const {formId} = req.params;
 
